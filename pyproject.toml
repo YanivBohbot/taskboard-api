@@ -1,0 +1,20 @@
+[project]
+name = "taskboard-api"
+version = "0.1.0"
+description = "Small in-memory task board API (demo target for Shipwright)."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.110",
+    "pydantic>=2.6",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "httpx>=0.27",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
