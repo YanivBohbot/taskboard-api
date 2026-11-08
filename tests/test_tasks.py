@@ -86,18 +86,17 @@ def test_pagination_limit_out_of_range_returns_422(client, limit):
     assert r.status_code == 422
 
 
-@pytest.mark.xfail(strict=True, reason="SHIP bug demo")
-def test_create_task_with_empty_assignee_returns_500():
-    """Documents the deliberate bug: an empty assignee crashes the service (500).
+def test_ac1_empty_assignee_returns_422_problem(client, project):
+    r = client.post(
+        f"/projects/{project['id']}/tasks",
+        json={"title": "Write docs", "assignee": ""},
+    )
 
-    Expected behaviour once fixed: a 422 problem+json. The assertion below
-    states the *desired* behaviour, so the test fails (xfail) today.
-    """
-    from fastapi.testclient import TestClient
-
-    from app.main import app
-
-    c = TestClient(app, raise_server_exceptions=False)
-    pid = c.post("/projects", json={"name": "Bug"}).json()["id"]
-    r = c.post(f"/projects/{pid}/tasks", json={"title": "x", "assignee": ""})
     assert r.status_code == 422
+    assert r.headers["content-type"].startswith("application/problem+json")
+    body = r.json()
+    assert set(body) == {"type", "title", "status", "detail"}
+    assert body["type"] == "about:blank"
+    assert body["title"] == "Unprocessable Entity"
+    assert body["status"] == 422
+    assert "assignee" in body["detail"]

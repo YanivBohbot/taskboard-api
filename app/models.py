@@ -28,7 +28,7 @@ class Project(BaseModel):
 class TaskCreate(BaseModel):
     title: str = Field(min_length=1, max_length=200)
     # Assignee email. No email validation on purpose (see README).
-    assignee: str
+    assignee: str = Field(min_length=1)
     status: TaskStatus = TaskStatus.todo
 
 
