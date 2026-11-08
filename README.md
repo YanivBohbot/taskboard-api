@@ -35,7 +35,7 @@ uv run uvicorn app.main:app --reload
 uv run pytest -q
 ```
 
-The known-bug test (`test_create_task_with_empty_assignee_returns_500`) is an expected failure (xfail, strict).
+Empty task assignees are rejected with a 422 problem+json validation error.
 
 ## Layout
 
