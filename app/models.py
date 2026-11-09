@@ -1,3 +1,4 @@
+from datetime import UTC, datetime
 from enum import StrEnum
 
 from pydantic import BaseModel, Field
@@ -45,6 +46,9 @@ class Task(BaseModel):
     assignee: str
     assignee_domain: str
     status: TaskStatus
+    # Services set persisted task timestamps explicitly; this default keeps
+    # direct model construction valid.
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class Page[T](BaseModel):
