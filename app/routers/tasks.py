@@ -26,6 +26,17 @@ def list_tasks(
     return task_service.list_tasks(project_id, limit, offset, status)
 
 
+@router.get(
+    "/export.csv",
+    response_class=Response,
+    responses={200: {"content": {"text/csv": {}}}},
+)
+def export_tasks_csv(project_id: int) -> Response:
+    return Response(
+        content=task_service.export_tasks_csv(project_id), media_type="text/csv"
+    )
+
+
 @router.get("/{task_id}")
 def get_task(project_id: int, task_id: int) -> Task:
     return task_service.get_task(project_id, task_id)
