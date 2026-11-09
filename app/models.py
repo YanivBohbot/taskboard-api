@@ -1,4 +1,5 @@
 from enum import StrEnum
+from typing import Literal
 
 from pydantic import BaseModel, Field
 
@@ -45,6 +46,14 @@ class Task(BaseModel):
     assignee: str
     assignee_domain: str
     status: TaskStatus
+
+
+class HealthStatus(BaseModel):
+    status: Literal["ok"]
+    version: str
+    uptime_seconds: float
+    project_count: int
+    task_count: int
 
 
 class Page[T](BaseModel):

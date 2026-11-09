@@ -6,7 +6,7 @@ A small in-memory FastAPI service for managing projects and their tasks.
 
 | Method | Path | Notes |
 |---|---|---|
-| GET | `/health` | Returns `{"status": "ok"}` |
+| GET | `/health` | Returns status, package version, uptime, and in-memory project/task counts |
 | POST, GET | `/projects` | Create / list (`limit` 1-100, `offset`) |
 | GET, PUT, DELETE | `/projects/{project_id}` | Deleting a project deletes its tasks |
 | POST, GET | `/projects/{project_id}/tasks` | Create / list (`limit`, `offset`, `status`) |
