@@ -14,9 +14,11 @@ A small in-memory FastAPI service for managing projects and their tasks.
 
 Task status is one of `todo`, `in_progress`, `done`. The assignee is an email address.
 
+Public endpoints are limited to 60 requests per minute per client IP. `GET /health` is exempt. Exceeded limits return 429 `application/problem+json` with a `Retry-After` header.
+
 ## Error format (ADR-001)
 
-Errors raised by the app (404, 409, 422) use RFC 7807 `application/problem+json`:
+Errors raised by the app (404, 409, 422, 429) use RFC 7807 `application/problem+json`:
 
 ```json
 {"type": "about:blank", "title": "Not Found", "status": 404, "detail": "Project 7 not found"}
